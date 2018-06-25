@@ -1,10 +1,10 @@
-package hello.dao;
+package com.sexycode.springboot.dao;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import hello.model.Customer;
+import com.sexycode.springboot.model.Customer;
 
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {

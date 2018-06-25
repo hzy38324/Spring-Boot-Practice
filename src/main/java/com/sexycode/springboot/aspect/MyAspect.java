@@ -1,4 +1,4 @@
-package hello.aspect;
+package com.sexycode.springboot.aspect;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
-public class CustomerAspect {
-    @Before("execution(* hello.service.CustomerService.testAspect())")
+public class MyAspect {
+    @Before("execution(* com.sexycode.springboot.service.AspectService.testAspect())")
     public void processBeforeTestAspect(){
         System.out.println("process before test aspect");
     }

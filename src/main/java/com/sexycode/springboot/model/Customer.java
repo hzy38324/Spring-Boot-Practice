@@ -1,5 +1,5 @@
 // tag::sample[]
-package hello.model;
+package com.sexycode.springboot.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

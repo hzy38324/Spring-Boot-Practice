@@ -1,11 +1,14 @@
-package hello.service;
+package com.sexycode.springboot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
-import hello.dao.CustomerRepository;
-import hello.model.Customer;
+import com.sexycode.springboot.dao.CustomerRepository;
+import com.sexycode.springboot.model.Customer;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 
 /**
@@ -20,6 +23,9 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
 
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
     public Iterable<Customer> findAll() {
         return customerRepository.findAll();
     }
@@ -33,6 +39,10 @@ public class CustomerService {
 
     @Transactional
     public void deleteAllAndAddOneTransactional(Customer customer) {
+        doDeleteAllAndAddOne(customer);
+    }
+
+    private void doDeleteAllAndAddOne(Customer customer) {
         customerRepository.deleteAll();
         if ("Yang".equals(customer.getFirstName())) {
             throw new RuntimeException();
@@ -40,12 +50,12 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public void testAspect(){
-        System.out.println("go into testAspect");
+    public void deleteAllAndAddOneUsingTransactionTemplate(Customer customer) {
+        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                doDeleteAllAndAddOne(customer);
+            }
+        });
     }
 
-    public void doTestAspect(){
-        System.out.println("go into doTestAspect");
-        testAspect();
-    }
 }

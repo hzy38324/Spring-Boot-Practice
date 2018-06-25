@@ -1,4 +1,4 @@
-package hello.controller;
+package com.sexycode.springboot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import hello.service.CustomerService;
-import hello.model.Customer;
+import com.sexycode.springboot.service.CustomerService;
+import com.sexycode.springboot.model.Customer;
 
 
 /**
@@ -22,7 +22,7 @@ public class CustomerController {
     private CustomerService customerService;
 
 
-    @RequestMapping("/customer")
+    @RequestMapping(value = "/customer", method = RequestMethod.GET)
     public Iterable<Customer> findAll() {
         return customerService.findAll();
     }
@@ -40,15 +40,9 @@ public class CustomerController {
         return "success";
     }
 
-    @RequestMapping("/v1.0/aspect")
-    public String testAspectV1() {
-        customerService.testAspect();
-        return "success";
-    }
-
-    @RequestMapping("/v2.0/aspect")
-    public String testAspectV2() {
-        customerService.doTestAspect();
+    @RequestMapping(value = "/v3.0/customer", method = RequestMethod.POST)
+    public String deleteAllAndAddOneV3(@RequestBody Customer customer) {
+        customerService.deleteAllAndAddOneUsingTransactionTemplate(customer);
         return "success";
     }
 

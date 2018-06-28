@@ -3,6 +3,7 @@ package com.sexycode.springboot.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sexycode.springboot.dao.CustomerRepository;
@@ -18,6 +19,9 @@ import org.springframework.transaction.support.TransactionTemplate;
  */
 @Service
 public class CustomerService {
+
+    @Autowired
+    private TestTxService testTxService;
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -56,6 +60,12 @@ public class CustomerService {
                 doDeleteAllAndAddOne(customer);
             }
         });
+    }
+
+    @Transactional
+    public void createTwoTx(Customer customer) {
+        customerRepository.save(customer);
+        testTxService.createTwoTxStep2();
     }
 
 }

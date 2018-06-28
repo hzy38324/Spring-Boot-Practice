@@ -46,5 +46,11 @@ public class CustomerController {
         return "success";
     }
 
+    @RequestMapping(value = "/createTwoTx", method = RequestMethod.POST)
+    public String createTwoTx(@RequestBody Customer customer) {
+        customerService.createTwoTx(customer);
+        return "success";
+    }
+
 }
 
